@@ -22,14 +22,15 @@ class WattcopyScaffold extends StatelessWidget {
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: Container(
-						margin: EdgeInsets.only(bottom: 12),
-						child: Text(this.caption,
+						margin: EdgeInsets.only(bottom: 24),
+						child: Text(
+              this.caption,
 							style: GoogleFonts.revalia(
-								fontSize: 36,
-								fontWeight: FontWeight.w400,
-								letterSpacing: 0.0,
-								color: Colors.white
-							)
+                fontSize: 36,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.0,
+                color: Colors.white
+              )
 						),
 					),
         ),

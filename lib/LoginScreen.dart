@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:wattcopy/common/WattcopyScaffold.dart';
 
@@ -7,57 +9,118 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final fb = FirebaseDatabase.instance;
+  final _firebaseAuth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+
+
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  void login() {
+    if(!_formKey.currentState.validate()) {
+      return;
+    }
+
+    _firebaseAuth.signInWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text
+    )
+    .then((value) => print('logado!'))
+    .catchError((error) {
+      showDialog(
+        context: context,
+        builder: (BuildContext buildContext) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(error.message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Ok')
+              )
+            ],
+          );
+        }
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return WattcopyScaffold(
-      caption: "Login",
-      backButton: true,
-      body: SingleChildScrollView(
-        child: Center(
-					child: FractionallySizedBox(
-						widthFactor: 0.90,
-						child: Column(
-							crossAxisAlignment: CrossAxisAlignment.center,
-							mainAxisAlignment: MainAxisAlignment.center,
-							children: <Widget>[
-								buildField("Nome de usuário", _usernameController, () {}),
-								buildField("Senha", _passwordController, () {}, obscureText: true),
-								SizedBox(height: 24),
-								Container(
-									width: double.infinity,
-									child: ElevatedButton(
-										onPressed: () {},
-										child: Text("Login")
-									),
-								)
-							],
-						),
-					)
-				),
-      ),
+    return Form(
+      key: _formKey,
+      child: WattcopyScaffold(
+        caption: "Login",
+        backButton: true,
+        body: SingleChildScrollView(
+          child: Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.90,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  buildField(
+                    "Email",
+                    _emailController,
+                    hintText: 'Seu email...'
+                  ),
+                  buildField(
+                    "Senha",
+                    _passwordController,
+                    hintText: 'Sua senha...',
+                    obscureText: true
+                  ),
+                  SizedBox(height: 24),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: login,
+                      child: Text("Login")
+                    ),
+                  ),
+                  SizedBox(height: 12,),
+                  Container(
+                    child: TextButton(
+                      child: Text('Esqueceu sua senha?'),
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/password-reset');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ),
+        ),
+      )
     );
   }
 
   Widget buildField(
 		String label, 
 		TextEditingController controller,
-		Function onTextChange,
-		{bool obscureText = false}
+		{bool obscureText = false, String hintText=''}
 	) {
     return Container(
       margin: EdgeInsets.only(bottom: 24),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if(value.isEmpty) return 'Esse campo não pode estar vazio!';
+          return null;
+        },
         obscureText: obscureText,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(12),
+          hintText: hintText,
           labelText: label,
         ),
-        style: TextStyle(fontSize: 25.8, color: Colors.white),
         controller: controller,
         keyboardType: TextInputType.visiblePassword,
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.white,
+        ),
       ),
     );
   }

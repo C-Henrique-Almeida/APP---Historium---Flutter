@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1010099849972",
+    "firebase_url": "https://wattcopy-d7161-default-rtdb.firebaseio.com",
+    "project_id": "wattcopy-d7161",
+    "storage_bucket": "wattcopy-d7161.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010099849972:android:d4dc3e1870c614d5d32ca1",
+        "android_client_info": {
+          "package_name": "com.project.wattcopy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010099849972-5b8r3hv19gr9k65ovd8agobqcigv511a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt4_FqFNN9SbXOmQHwJYbXGk9pwDoqLm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010099849972-5b8r3hv19gr9k65ovd8agobqcigv511a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1010099849972-aluo58e2tip5j1i8pd4o65bs7e95va9q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.project.wattcopy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

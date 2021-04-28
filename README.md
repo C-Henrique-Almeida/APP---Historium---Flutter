@@ -19,4 +19,4 @@ samples, guidance on mobile development, and a full API reference.
 - "flutter pub get"
 - "flutter run"
 
-# Depois so e necessario usar "flutter pub get"
+# Depois so e necessario usar "flutter run"

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.wattcopy">
+    package="com.project.historium">
    <application
-        android:label="wattcopy"
+        android:label="historium"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

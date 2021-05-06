@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "1010099849972",
-    "firebase_url": "https://wattcopy-d7161-default-rtdb.firebaseio.com",
-    "project_id": "wattcopy-d7161",
-    "storage_bucket": "wattcopy-d7161.appspot.com"
+    "project_number": "100955442928",
+    "project_id": "historium-3cfca",
+    "storage_bucket": "historium-3cfca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1010099849972:android:d4dc3e1870c614d5d32ca1",
+        "mobilesdk_app_id": "1:100955442928:android:3c30d4289043827f0abc35",
         "android_client_info": {
-          "package_name": "com.project.wattcopy"
+          "package_name": "com.project.historium"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1010099849972-5b8r3hv19gr9k65ovd8agobqcigv511a.apps.googleusercontent.com",
+          "client_id": "100955442928-7ussa9i0katmhgkhf6erqqo6evt852hj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCt4_FqFNN9SbXOmQHwJYbXGk9pwDoqLm0"
+          "current_key": "AIzaSyBwEiw4XqnNhyOlIlvBzNmEjyJRYwqlRIo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1010099849972-5b8r3hv19gr9k65ovd8agobqcigv511a.apps.googleusercontent.com",
+              "client_id": "100955442928-7ussa9i0katmhgkhf6erqqo6evt852hj.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1010099849972-aluo58e2tip5j1i8pd4o65bs7e95va9q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.project.wattcopy"
-              }
             }
           ]
         }

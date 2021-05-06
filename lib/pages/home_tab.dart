@@ -15,6 +15,12 @@ class HomeTab extends StatelessWidget {
         CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              actions: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Icon(Icons.logout),
+                )
+              ],
               floating: true,
               backgroundColor: Colors.black,
               elevation: 0.0,

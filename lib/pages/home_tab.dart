@@ -12,6 +12,23 @@ class HomeTab extends StatelessWidget {
     return Stack(
       children: <Widget>[
         _buildBodyBack(),
+        Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Tendências", 
+            style: TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold)
+          ),
+          Text(
+            "Ficção científica", 
+            style: TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold)
+          ),
+          Text(
+            "Terror", 
+            style: TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold)
+          ),
+        ],
+        ),
         CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -19,8 +36,7 @@ class HomeTab extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Icon(Icons.logout),
-                )
-              ],
+                )],
               floating: true,
               backgroundColor: Colors.black,
               elevation: 0.0,

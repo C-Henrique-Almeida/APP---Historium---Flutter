@@ -1,8 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:historium/pages/common/components/EmailField.dart';
-import 'package:historium/pages/common/components/PasswordField.dart';
+import 'package:historium/errors/Error.dart';
+import 'package:historium/helpers/LoginHelper.dart';
+import 'package:historium/pages/components/fields/EmailField.dart';
+import 'package:historium/pages/components/dialogs/ErrorDialog.dart';
+import 'package:historium/pages/components/fields/PasswordField.dart';
+
+
 
 class InitialPage extends StatefulWidget {
   @override
@@ -10,59 +15,12 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
+
   final _formState = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final firebaseAuth = FirebaseAuth.instance;
-
-  void login() async {
-    if(!_formState.currentState.validate()) return Future.error(
-      'Um ou mais campos não foram preenchidos corretamente'
-    );
-
-    try{
-      await firebaseAuth.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      Navigator.pushNamed(context, '/home');
-    } on FirebaseAuthException catch (error) {
-      String title;
-      String message;
-
-      print(error.code);
-
-      switch(error.code) {
-        case 'user-not-found':
-        case 'wrong-password':
-          title = 'Erro no login';
-          message = 'Email ou senha incorretos.';
-          break;
-        default:
-          title = 'Erro inesperado';
-          message = 'Um erro inesperado aconteceu, por favor tente mais tarde.';
-          break;
-      }
-
-      showDialog(
-        context: context,
-        builder: (BuildContext _context) {
-          return AlertDialog(
-            title: Text(title),
-            content: SingleChildScrollView(
-              child: Text(message),
-            ),
-            actions: [
-              TextButton(onPressed: () => Navigator.of(_context).pop(), child: Text('Ok')),
-            ],
-          );
-        }
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,117 +58,137 @@ class _InitialPageState extends State<InitialPage> {
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) =>
-        SizedBox(
-          height: constraints.maxHeight,
-          child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              constraints: BoxConstraints(
-                minHeight:
-                  MediaQuery.of(context).size.height - 
-                  Scaffold.of(context).appBarMaxHeight,
+        SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: MediaQuery.of(context).size.height -
+                    Scaffold.of(context).appBarMaxHeight,
+            child: Form(
+              key: _formState,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget> [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget> [
+                      EmailField(
+                        controller: _emailController, 
+                      ),
+                      SizedBox(height: 12,),
+                      PasswordField(
+                        controller: _passwordController,
+                      ),
+                      TextButton(
+                        child: Text(
+                          'Esqueceu sua senha?',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                    
+                        onPressed: () => Navigator.pushNamed(context, '/reset-password'),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget> [
+                      buildLoginButton(context),
+                      SizedBox(height: 20,),
+                      Text(
+                        'ou',
+                        style: GoogleFonts.rokkitt(fontSize: 22),
+                      ),
+                      SizedBox(height: 20,),
+                      buildLoginWithGoogleButton(),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget> [
+                      Text(
+                        'Ainda não se cadastrou?',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      TextButton(
+                        child: Text(
+                          'Registre-se aqui',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        onPressed: () => Navigator.pushNamed(context, '/register'),
+                      )
+                    ],
+                  )
+                ],
               ),
-              child: Form(
-                key: _formState,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget> [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget> [
-                        EmailField(
-                          controller: _emailController, 
-                        ),
-                        SizedBox(height: 12,),
-                        PasswordField(
-                          controller: _passwordController,
-                        ),
-                        TextButton(
-                          child: Text(
-                            'Esqueceu sua senha?',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
-                      
-                          onPressed: () => Navigator.pushNamed(context, '/reset-password'),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget> [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                              horizontal: 50,
-                              vertical: 8,
-                            )),
-                            backgroundColor: MaterialStateProperty.all(Colors.black),
-                            textStyle: MaterialStateProperty.all(GoogleFonts.roboto(
-                              fontSize: 24,
-                            )),
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50))
-                            )),
-                            
-                          ),
-                          onPressed: login,
-                          child: Text('Login'),
-                        ),
-                        SizedBox(height: 20,),
-                        Text(
-                          'ou',
-                          style: GoogleFonts.rokkitt(fontSize: 22),
-                        ),
-                        SizedBox(height: 20,),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            )),
-                            backgroundColor: MaterialStateProperty.all(Colors.blue),
-                            textStyle: MaterialStateProperty.all(GoogleFonts.roboto(
-                              fontSize: 24,
-                            )),
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50))
-                            )),
-                          ),
-                          onPressed: (){},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center, 
-                            children: [
-                              Image.asset('assets/icon-google.png'),
-                              SizedBox(width: 10,),
-                              Text('Logar com o google'),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'Ainda não se cadastrou?',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        TextButton(
-                          child: Text(
-                            'Registre-se aqui',
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          onPressed: () => Navigator.pushNamed(context, '/register'),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ) 
+            ),
           ),
-        ),
+        )
       ),
     );
+  }
+
+  Widget buildLoginButton(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+          horizontal: 50,
+          vertical: 8,
+        )),
+        backgroundColor: MaterialStateProperty.all(Colors.black),
+        textStyle: MaterialStateProperty.all(GoogleFonts.roboto(
+          fontSize: 24,
+        )),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50))
+        )),
+        
+      ),
+      onPressed: () => login(context),
+      child: Text('Login'),
+    );
+  }
+
+
+  Widget buildLoginWithGoogleButton() {
+    return ElevatedButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 8,
+        )),
+        backgroundColor: MaterialStateProperty.all(Colors.blue),
+        textStyle: MaterialStateProperty.all(GoogleFonts.roboto(
+          fontSize: 24,
+        )),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50))
+        )),
+      ),
+      onPressed: (){},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center, 
+        children: [
+          Image.asset('assets/icon-google.png'),
+          SizedBox(width: 10,),
+          Text('Logar com o google'),
+        ],
+      ),
+    );
+  }
+
+  /*
+    This function attempts a signInWithEmailAndPassword operation
+    on Firebase
+  */
+  void login(BuildContext context) {
+    LoginHelper().loginWithEmailAndPassword(
+      _emailController.text,
+      _passwordController.text 
+    )
+    .then((value) => Navigator.pushNamed(context, '/home'))
+    .catchError((error) {
+      if(error is Error) {
+        ErrorDialog.show(context, error);
+      }
+    });
   }
 }

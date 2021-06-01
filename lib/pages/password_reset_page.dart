@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:historium/pages/common/components/EmailField.dart';
+import 'package:historium/assemblers/ErrorAssembler.dart';
+import 'package:historium/errors/Error.dart';
+import 'package:historium/pages/components/fields/EmailField.dart';
+import 'package:historium/pages/components/dialogs/ErrorDialog.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   @override
@@ -27,40 +30,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
         'Email para recuperação enviado!'
       )));
-    } on FirebaseAuthException catch (error) {
-      String title;
-      String message;
+    } on FirebaseAuthException catch (exception) {
+      Error error = await ErrorAssembler().toError(exception);
 
-      switch(error.code) {
-        case 'invalid-email':
-          title = 'Email inválido';
-          message = 'Esse endereço de e-mail não parece ser válido';
-          break;
-        case 'user-not-found':
-          title = 'Usuário não encontrado';
-          message = 'Nenhum usuário com esse e-mail foi encontrado';
-          break;
-        default:
-          title = 'Erro inesperado';
-          message = 'Um erro inesperado aconteceu, por favor tente mais tarde.';
-          print(error.code);
-          break;
-      }
-
-      showDialog(
-        context: context,
-        builder: (BuildContext _context) {
-          return AlertDialog(
-            title: Text(title),
-            content: SingleChildScrollView(
-              child: Text(message),
-            ),
-            actions: [
-              TextButton(onPressed: () => Navigator.of(_context).pop(), child: Text('Ok')),
-            ],
-          );
-        }
-      );
+      ErrorDialog.show(context, error);
     }
   }
 

@@ -21,7 +21,6 @@ class _PasswordFieldState extends State<PasswordField> {
         return null;
       },
       controller: controller,
-      autocorrect: true,
       keyboardType: TextInputType.emailAddress,
       obscureText: true,
       style: TextStyle(

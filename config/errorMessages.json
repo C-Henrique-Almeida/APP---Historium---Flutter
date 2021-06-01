@@ -1,0 +1,18 @@
+{
+    "email-already-in-use": {
+        "title": "E-mail já em uso",
+        "message": "Esse e-mail já está em uso por outro usuário"
+    },
+    "wrong-password": {
+        "title": "Erro no login",
+        "message": "E-mail ou senha incorretos."
+    },
+    "invalid-email": {
+        "title": "Email inválido",
+        "message": "Esse endereço de e-mail não parece ser válido"
+    },
+    "user-not-found": {
+        "title": "Usuário não encontrado",
+        "message": "Nenhum usuário com esse e-mail foi encontrado"
+    }
+}

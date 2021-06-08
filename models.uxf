@@ -1,0 +1,50 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>380</x><y>256</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+User
+--
+uid: String
+username: String
+profilePictureUrl: String
+dateOfBirth: DateTime
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>26</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+BookGenres
+--
+HORROR
+ROMANCE
+BIOGRAPHY
+SUSPENCE
+ACTION
+SCIFI
+RPG
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>86</y><w>210</w><h>190</h></coordinates><panel_attributes>lt=&lt;-
+r1=favouriteGenres
+m1=0..*</panel_attributes><additional_attributes>190;20;10;20;10;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>416</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+BookData
+--
+id: String
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>546</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+ReadingStatus
+--
+bookId: String
+readPages: int
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>436</y><w>210</w><h>250</h></coordinates><panel_attributes>lt=&lt;-
+r1=readings
+m1=0..*</panel_attributes><additional_attributes>190;220;10;220;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>116</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+Book
+--
+id: String
+title: String
+coverUrl: String
+synopsys: String
+fileUrl: String
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>256</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+Account
+--
+email: String
+password: String
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>326</y><w>200</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+r1=user
+m1=1</panel_attributes><additional_attributes>180;20;10;20</additional_attributes></element></diagram>

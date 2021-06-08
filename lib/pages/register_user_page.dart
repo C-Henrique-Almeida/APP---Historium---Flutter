@@ -1,19 +1,20 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:historium/errors/Error.dart';
-import 'package:historium/helpers/BookGenreHelper.dart';
-import 'package:historium/helpers/RegisterHelper.dart';
-import 'package:historium/models/AccountRegisterInfo.dart';
+import 'package:historium/model/helpers/BookGenreHelper.dart';
+import 'package:historium/controller/inputModels/AccountInput.dart';
+import 'package:historium/controller/inputModels/UserInput.dart';
 import 'package:historium/pages/components/dialogs/ErrorDialog.dart';
+import 'package:historium/model/services/RegisterService.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterUserPage extends StatefulWidget {
-  final AccountRegisterInfo accountRegisterInfo;
 
-  RegisterUserPage(this.accountRegisterInfo);
+  final AccountInput account;
+
+  RegisterUserPage(this.account);
 
   @override
   _RegisterUserPageState createState() => _RegisterUserPageState();
@@ -29,22 +30,17 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
 
   final _genreList = BookGenreHelper().listAll();
 
-  AccountRegisterInfo _accountRegisterInfo;
-
+  UserInput _user;
 
   @override
   void initState() {
     super.initState();
 
-    _accountRegisterInfo = widget.accountRegisterInfo;
+    _user = widget.account.userInput;
 
-    _usernameController.text = _accountRegisterInfo.username;
-    _birthDateFieldController.text = _accountRegisterInfo.birthDate != null ?
-      _toFormatedDate(_accountRegisterInfo.birthDate) : '';
-    _genresFieldController.text = 
-      _accountRegisterInfo.favouriteBookGenres.isNotEmpty ? 
-      _accountRegisterInfo.favouriteBookGenres.join(', ') : '';
-
+    _usernameController.text = _user.username ?? '';
+    _birthDateFieldController.text = _toFormatedDate(_user.birthDate);
+    _genresFieldController.text = _user.favouriteGenres?.join(', ') ?? '';
   }
 
   @override
@@ -84,7 +80,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
 
                           if(selectedImagePath.isNotEmpty) {
                             setState(() {
-                              _accountRegisterInfo.profilePicturePath =
+                              _user.profilePictureUri =
                                 selectedImagePath;
                             });
                           }
@@ -98,14 +94,15 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: _accountRegisterInfo
-                                      .profilePicturePath.isNotEmpty ?
+                              image: (
+                                _user.profilePictureUri != null &&
+                                _user.profilePictureUri.isNotEmpty ?
                                 FileImage(
                                   File(
-                                    _accountRegisterInfo.profilePicturePath
+                                    _user.profilePictureUri
                                   )
                                 ) :
-                                AssetImage('assets/person-circle-1.png')
+                                AssetImage('assets/person-circle-1.png'))
                             ),
                           ),
                         ),
@@ -114,7 +111,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                       TextFormField(
                         controller: _usernameController,
                         onChanged: (String value) =>
-                          _accountRegisterInfo.username = value,
+                          _user.username = value,
                         decoration: InputDecoration(
                           hintText: "Seu nome",
                         ),
@@ -170,14 +167,14 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   void _pickDate() async {
     final dateTime = await showDatePicker(
       context: context,
-      initialDate: _accountRegisterInfo.birthDate ?? DateTime.now(),
+      initialDate: _user.birthDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now()
     );
 
     if(dateTime != null){
       setState(() {
-        _accountRegisterInfo.birthDate = dateTime;
+        _user.birthDate = dateTime;
 
         _birthDateFieldController.text = _toFormatedDate(dateTime);
       });
@@ -193,8 +190,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
       builder: (BuildContext context) => 
       Dialog(
         child: Scaffold(
+          persistentFooterButtons: [
+            TextButton(
+              onPressed: () => Navigator.pop(context), 
+              child: Text("Ok")
+            ),
+          ],
           appBar: AppBar(
-            actions: [],
             backgroundColor: Colors.black,
             title: Text("Selecione seus generos favoritos"),
           ),
@@ -216,12 +218,11 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                       10
                     ),
                     backgroundColor: MaterialStateProperty.all(
-                      _accountRegisterInfo.favouriteBookGenres
-                        .contains(_genreList[index]) ?
+                      _user.favouriteGenres.contains(_genreList[index]) ?
                         Colors.black : Colors.white,
                     ),
                     textStyle: MaterialStateProperty.all(TextStyle(
-                      color: _accountRegisterInfo.favouriteBookGenres
+                      color: _user.favouriteGenres
                         .contains(_genreList[index]) ?
                         Colors.black : Colors.white,
                     )),
@@ -233,12 +234,12 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                   ),
                   onPressed: () {
                     setDialogState(() {
-                      if(_accountRegisterInfo.favouriteBookGenres.contains(_genreList[index])) {
-                        _accountRegisterInfo.favouriteBookGenres
+                      if(_user.favouriteGenres.contains(_genreList[index])) {
+                        _user.favouriteGenres
                           .remove(_genreList[index]);
                       }
                       else {
-                        _accountRegisterInfo.favouriteBookGenres
+                        _user.favouriteGenres
                           .add(_genreList[index]);
                       }
                     });
@@ -247,7 +248,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                     _genreList[index],
                     style: TextStyle(
                       fontSize: 20,
-                      color: _accountRegisterInfo.favouriteBookGenres
+                      color: _user.favouriteGenres
                         .contains(_genreList[index]) ?
                         Colors.white : Colors.black,
                     ),
@@ -256,19 +257,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
               )
             ),
           ),
-          persistentFooterButtons: [
-            TextButton(
-              onPressed: () => Navigator.pop(context), 
-              child: Text("Ok")
-            )
-          ],
         ),
       )
     );
 
     setState(() {
       _genresFieldController.text =
-        _accountRegisterInfo.favouriteBookGenres.join(', ');
+        _user.favouriteGenres.join(', ');
     });
   }
 
@@ -299,35 +294,39 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   Future<void> _register(BuildContext context) async {
     if(!_formKey.currentState.validate()) return;
 
-    RegisterHelper()
-      .registerWithEmailAndPassword(_accountRegisterInfo)
-      .then((value) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Registrado com sucesso'),
-                TextButton(
-                  onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-                  child: Text('Dispensar')
-                )
-              ],
-            ),
-            duration: Duration(seconds: 5),
-          )
-        );
-      })
-      .catchError((error) {
-        if(error is Error) {
-          ErrorDialog.show(context, error);
-        }
-      });
+    try {
+      await RegisterService().registerAccount(widget.account);
+
+      Navigator.pop(context);
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Registrado com sucesso'),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+                child: Text('Dispensar'),
+              )
+            ],
+          ),
+          duration: Duration(seconds: 5),
+        )
+      );
+    }
+    on Error catch(error) {
+      if(error is Error) {
+        ErrorDialog.show(context, error);
+      }
+    }
   }
 
   String _toFormatedDate(DateTime dateTime) {
+    if(dateTime == null) return '';
+
     String result = dateTime.day <= 9 ?
       '0${dateTime.day}':
       '${dateTime.day}';

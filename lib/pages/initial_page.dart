@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:historium/errors/Error.dart';
-import 'package:historium/helpers/LoginHelper.dart';
+import 'package:historium/model/helpers/LoginHelper.dart';
 import 'package:historium/pages/components/fields/EmailField.dart';
 import 'package:historium/pages/components/dialogs/ErrorDialog.dart';
 import 'package:historium/pages/components/fields/PasswordField.dart';

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:historium/models/AccountRegisterInfo.dart';
+import 'package:historium/controller/inputModels/AccountInput.dart';
 import 'package:historium/pages/components/fields/EmailField.dart';
 import 'package:historium/pages/components/fields/PasswordField.dart';
 import 'package:historium/pages/register_user_page.dart';
 
 class RegisterAccountPage extends StatefulWidget {
+  
   @override
   _RegisterAccountPageState createState() => _RegisterAccountPageState();
 }
@@ -18,19 +19,7 @@ class _RegisterAccountPageState extends State<RegisterAccountPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  AccountRegisterInfo _accountRegisterInfo = AccountRegisterInfo();
-
-  @override
-  void initState() {
-    super.initState();
-
-    _accountRegisterInfo.email = '';
-    _accountRegisterInfo.password = '';
-    _accountRegisterInfo.profilePicturePath = '';
-    _accountRegisterInfo.username = '';
-    _accountRegisterInfo.birthDate = null;
-    _accountRegisterInfo.favouriteBookGenres = <String> [];
-  }
+  AccountInput _account;
 
   @override
   Widget build(BuildContext context) {
@@ -132,13 +121,15 @@ class _RegisterAccountPageState extends State<RegisterAccountPage> {
   void _continuePressedHandler(BuildContext context) {
     if(!_formKey.currentState.validate()) return;
 
-    _accountRegisterInfo.email = _emailController.text;
-    _accountRegisterInfo.password = _passwordController.text;
+    if(_account == null) _account = AccountInput.empty();
+
+    _account.email = _emailController.text;
+    _account.password = _passwordController.text;
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RegisterUserPage(_accountRegisterInfo)
+        builder: (context) => RegisterUserPage(_account)
       )
     );
   }

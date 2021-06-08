@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:historium/assemblers/ErrorAssembler.dart';
-import 'package:historium/models/User.dart';
+import 'package:historium/model/entity/User.dart';
 
 
 class LoginHelper {
@@ -21,7 +21,6 @@ class LoginHelper {
       );
 
       user.uid = userCredential.user.uid;
-      user.email = userCredential.user.email;
 
     }
     on fbAuth.FirebaseAuthException catch(exception) {

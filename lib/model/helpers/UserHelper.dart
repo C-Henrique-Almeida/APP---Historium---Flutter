@@ -10,7 +10,7 @@ class UserHelper {
   final _storage = FirebaseStorage.instance;
 
   void save(UserInput user) async {
-    final newUserUid = await _firestore.collection('users').doc(user.uid).set({
+    await _firestore.collection('users').doc(user.uid).set({
       'username': user.username,
       'birthDate': user.birthDate,
       'favouriteGenres': user.favouriteGenres

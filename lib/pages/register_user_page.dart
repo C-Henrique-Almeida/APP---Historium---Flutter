@@ -299,22 +299,25 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
 
       Navigator.pop(context);
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Registrado com sucesso'),
-              GestureDetector(
-                onTap: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                },
-                child: Text('Dispensar'),
-              )
+
+      showDialog(
+        context: context,
+        builder: (BuildContext _context) {
+          return AlertDialog(
+            title: Text('Registrado com sucesso'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            content: SingleChildScrollView(
+              child: Text('Registro efetuado com sucesso!'),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(_context).pop(), child: Text('Ok')
+              ),
             ],
-          ),
-          duration: Duration(seconds: 5),
-        )
+          );
+        }
       );
     }
     on Error catch(error) {

@@ -8,26 +8,19 @@ class LoginHelper {
   final _firebaseAuth = fbAuth.FirebaseAuth.instance;
 
 
-  Future<User> loginWithEmailAndPassword(
+  Future<void> loginWithEmailAndPassword(
     String email,
     String password
   ) async {
-    User user;
-
     try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password
       );
-
-      user.uid = userCredential.user.uid;
-
     }
     on fbAuth.FirebaseAuthException catch(exception) {
       return Future.error(await ErrorAssembler().toError(exception));
     }
-
-    return user;
   }
 
 }

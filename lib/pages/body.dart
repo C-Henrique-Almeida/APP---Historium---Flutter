@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _BodyPageState extends State<Body> {
             leading: null,
             title: Text(
               "Historium",
-              style: TextStyle(fontFamily: 'Revalia'),
+              style: GoogleFonts.revalia()
             ),
             actions: [
               Padding(padding: const EdgeInsets.all(20.0)),

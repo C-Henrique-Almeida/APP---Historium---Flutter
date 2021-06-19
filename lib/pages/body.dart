@@ -11,13 +11,8 @@ class _BodyPageState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: null,
-            title: Text(
-              "Historium",
-              style: GoogleFonts.revalia()
-            ),
+            title: Text("Historium", style: GoogleFonts.revalia()),
             actions: [
-              Padding(padding: const EdgeInsets.all(20.0)),
               Icon(Icons.chat_bubble),
               Icon(Icons.account_circle)
             ],
@@ -25,15 +20,30 @@ class _BodyPageState extends State<Body> {
         body: ListView.builder(
             itemCount: 3,
             itemBuilder: (context, index) {
+              int genero = index + 1;
               return Card(
-                color: Colors.grey[400],
+                color: Colors.black,
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: <Widget>[
-                      Text('Gênero $index'),
+                      Text('Gênero $genero'),
                       SizedBox(height: 100),
-                      Text('Nome do livro')
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child:
+                              Text('Nome do livro')
+                            ),
+                          Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child:
+                              Text('Nome do livro')
+                            )
+                        ],
+                      )
                     ],
                   ),
                 ),

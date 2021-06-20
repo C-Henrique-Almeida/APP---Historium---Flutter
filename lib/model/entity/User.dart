@@ -1,6 +1,9 @@
-class User {
+import 'package:historium/model/entity/Entity.dart';
 
-  String uid;
+class User extends Entity {
+
+  User(String uid) : super(uid);
+
   String username;
   String profilePictureUrl;
   DateTime birthDate;

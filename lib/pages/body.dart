@@ -14,7 +14,10 @@ class _BodyPageState extends State<Body> {
             title: Text("Historium", style: GoogleFonts.revalia()),
             actions: [
               Icon(Icons.chat_bubble),
-              Icon(Icons.account_circle)
+              IconButton(
+                onPressed: () => Navigator.pushNamed(context, '/home/edit-profile'),
+                icon: Icon(Icons.account_circle)
+              ),
             ],
             backgroundColor: Colors.black),
         body: ListView.builder(

@@ -1,5 +1,5 @@
 # Projeto de POO - App Historium
-- Projeto de aplicativo para celular da disciplina de Programação Orientada a Objetos do IFCE - CE
+- Projeto de aplicativo para celular da disciplina de Programação Orientada a Objetos do IFCE Fortaleza
 
 # Equipe: 
 - Carlos Henrique Oliveira de Almeida 

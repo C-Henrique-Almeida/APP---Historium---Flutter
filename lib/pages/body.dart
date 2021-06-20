@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:historium/pages/edit_profile_page.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -19,7 +20,15 @@ class _BodyPageState extends State<Body> {
             actions: [
               Padding(padding: const EdgeInsets.all(20.0)),
               Icon(Icons.chat_bubble),
-              Icon(Icons.account_circle)
+              IconButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_context) => EditProfilePage()
+                  )
+                ),
+                icon: Icon(Icons.account_circle)
+              )
             ],
             backgroundColor: Colors.black),
         body: ListView.builder(

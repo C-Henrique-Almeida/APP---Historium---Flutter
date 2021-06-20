@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:historium/assemblers/ErrorAssembler.dart';
-import 'package:historium/model/entity/User.dart';
 
 
 class LoginHelper {

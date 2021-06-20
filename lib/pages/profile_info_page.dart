@@ -10,17 +10,17 @@ import 'package:historium/pages/components/dialogs/ErrorDialog.dart';
 import 'package:historium/model/services/RegisterService.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RegisterUserPage extends StatefulWidget {
+class ProfileInfoPage extends StatefulWidget {
 
   final AccountInput account;
 
-  RegisterUserPage(this.account);
+  ProfileInfoPage(this.account);
 
   @override
-  _RegisterUserPageState createState() => _RegisterUserPageState();
+  _ProfileInfoPageState createState() => _ProfileInfoPageState();
 }
 
-class _RegisterUserPageState extends State<RegisterUserPage> {
+class _ProfileInfoPageState extends State<ProfileInfoPage> {
 
   final  _formKey = GlobalKey<FormState>(); 
 

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:historium/controller/inputModels/AccountInput.dart';
 import 'package:historium/pages/components/fields/EmailField.dart';
 import 'package:historium/pages/components/fields/PasswordField.dart';
-import 'package:historium/pages/register_user_page.dart';
+import 'package:historium/pages/profile_info_page.dart';
 
 class RegisterAccountPage extends StatefulWidget {
   
@@ -129,7 +129,7 @@ class _RegisterAccountPageState extends State<RegisterAccountPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RegisterUserPage(_account)
+        builder: (context) => ProfileInfoPage(_account)
       )
     );
   }

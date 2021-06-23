@@ -32,6 +32,7 @@
 /build/
 
 # Web related
+web/**
 lib/generated_plugin_registrant.dart
 
 # Symbolication related
@@ -44,3 +45,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+linux/**

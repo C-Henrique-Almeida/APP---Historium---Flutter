@@ -1,69 +1,79 @@
+import 'package:google_fonts/google_fonts.dart';
+import 'package:historium/model/stories.dart';
+import 'package:historium/model/storiesData.dart';
 import 'package:flutter/material.dart';
-import 'package:historium/model/entity/historiesData.dart';
-import 'package:historium/model/histories.dart';
+import 'package:historium/pages/widgets/searchWidget.dart';
 
 class SearchPage extends StatefulWidget {
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  List<Story> stories;
+  String query = '';
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.black12,
-        title: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Título ou Autor",
-              border: InputBorder.none,
-              prefix: Icon(Icons.search),
-            ),
-            onTap: () {
-              showSearch(context: context, delegate: BookSearch());
-            },
-          ),
+  void initState() {
+    super.initState();
+
+    stories = allStories;
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("Historium", style: GoogleFonts.revalia()),
+          backgroundColor: Colors.black
         ),
-      ),
-    );
-  }
-}
+        body: Column(
+          children: <Widget>[
+            buildSearch(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: stories.length,
+                itemBuilder: (context, index) {
+                  final story = stories[index];
 
-class BookSearch extends SearchDelegate<Book> {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [IconButton(onPressed: () {}, icon: Icon(Icons.clear))];
-  }
+                  return buildStory(story);
+                },
+              ),
+            ),
+          ],
+        ),
+      );
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_outlined));
-  }
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Título ou Autor',
+        onChanged: searchStory,
+      );
 
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
-  }
+  Widget buildStory(Story story) => ListTile(
+        leading: Image.network(
+          story.coverUrl,
+          fit: BoxFit.cover,
+          width: 50,
+          height: 50,
+        ),
+        title: Text(story.title),
+        subtitle: Text(story.author),
+      );
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final mylist = BookItem.loadBookItem();
-    return ListView.builder(
-        itemCount: mylist.length,
-        itemBuilder: (context, index) {
-          final BookItem listitem = mylist[index];
-          return ListTile(title: Text(listitem.title),
-          );
-        });
+  void searchStory(String query) {
+    final stories = allStories.where((story) {
+    final titleLower = story.title.toLowerCase();
+    final authorLower = story.author.toLowerCase();
+    final searchLower = query.toLowerCase();
+
+    return titleLower.contains(searchLower) ||
+        authorLower.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.stories = stories;
+    });
   }
 }

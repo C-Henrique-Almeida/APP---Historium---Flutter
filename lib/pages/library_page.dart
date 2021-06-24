@@ -21,7 +21,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Biblioteca'),
+        title: Text("Historium", style: GoogleFonts.revalia()),
         backgroundColor: Colors.black
       ),
       body: FutureBuilder(

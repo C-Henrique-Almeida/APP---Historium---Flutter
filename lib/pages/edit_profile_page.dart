@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:firebase_storage/firebase_storage.dart' as fbs;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+HomePage
+import 'package:historium/controller/outputModels/UserOutput.dart';
+
+ master
 import 'package:historium/model/entity/User.dart';
 import 'package:historium/model/helpers/BookGenreHelper.dart';
 import 'package:historium/model/services/UserService.dart';
@@ -301,16 +305,14 @@ class EditProfilePageController {
 
   _EditProfilePageState state;
 
-  bool userLoaded = false;
-
+HomePage
   EditProfilePageController(this.state);
 
   Future<void> loadUserData() async {
-    if(userLoaded) return Future.value();
-
     String uid = _auth.currentUser.uid;
 
-    final user = await _userService.loadUser(uid);
+    final user = UserOutput.fromUser(await _userService.loadUser(uid));
+
 
     state.birthDateFieldController.text = _toFormatedDate(user.birthDate);
     state.favouriteGenreFieldController.text = user.favouriteGenres.join(', ');
@@ -320,8 +322,7 @@ class EditProfilePageController {
     state.usernameController.text = user.username ?? '';
     state.birthDate = user.birthDate;
     state.favouriteGenres = user.favouriteGenres;
-
-    userLoaded = true;
+HomePage
   }
 
   void pickDate() async {
@@ -329,7 +330,9 @@ class EditProfilePageController {
       context: context,
       initialDate: state.birthDate ?? DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime.now()
+ HomePage
+      lastDate: state.birthDate
+
     );
 
     if(dateTime != null){
@@ -359,10 +362,8 @@ class EditProfilePageController {
 
   Future<void> save() async {
     if(!state.formKey.currentState.validate()) return;
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Salvando alterações...'))
-    );
+ HomePage
+
 
     User user = User(_auth.currentUser.uid);
 
@@ -389,8 +390,8 @@ class EditProfilePageController {
     user.favouriteGenres = state.favouriteGenres;
 
     await _userService.saveUser(user);
+ HomePage
 
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     
     Navigator.pop(context);
   }

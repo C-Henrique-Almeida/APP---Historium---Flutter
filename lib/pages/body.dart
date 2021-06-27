@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:historium/pages/edit_profile_page.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -14,10 +15,20 @@ class _BodyPageState extends State<Body> {
             title: Text("Historium", style: GoogleFonts.revalia()),
             actions: [
               Icon(Icons.chat_bubble),
-              IconButton(
+              IconButton( HomePage
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_context) => EditProfilePage()
+                  )
+                ),
+                icon: Icon(Icons.account_circle)
+              )
+
                 onPressed: () => Navigator.pushNamed(context, '/home/edit-profile'),
                 icon: Icon(Icons.account_circle)
               ),
+master
             ],
             backgroundColor: Colors.black),
         body: ListView.builder(

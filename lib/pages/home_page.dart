@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             color: _selectedIndex == 4 ? Colors.black : Colors.grey)
         ],
         animationDuration: Duration(milliseconds: 200),
-        animationCurve: Curves.easeInOutCirc
+        animationCurve: Curves.linear  
       ),
     );
   }

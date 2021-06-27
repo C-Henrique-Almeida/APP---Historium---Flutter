@@ -1,16 +1,17 @@
-# historium
+# Projeto de POO - App Historium
+- Projeto de aplicativo para celular da disciplina de Programação Orientada a Objetos do IFCE Fortaleza
 
-A new Flutter project.
+# Equipe: 
+- Carlos Henrique Oliveira de Almeida 
+- Emerson de oliveira Barbosa
+- Felipe Alves de Sousa 
+- Gabriel Luan Alves Valentim
+- João Lucas Tomé Caetano 
+- Luna Costa Vasconcelos
 
-## Getting Started
+# Objetivo
+- Criação de aplicativo mobile de compartilhamento de histórias chamado Historium, nele a pessoa poderá compartilhar a história que quiser com liberdade e a oportunidade de criar conexões com pesoas que também gostem dessas histórias
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Iniciando o projeto no flutter:
+- flutter pub get
+- flutter run

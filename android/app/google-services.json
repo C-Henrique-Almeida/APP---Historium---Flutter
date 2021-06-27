@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "100955442928",
+    "project_id": "historium-3cfca",
+    "storage_bucket": "historium-3cfca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100955442928:android:3c30d4289043827f0abc35",
+        "android_client_info": {
+          "package_name": "com.project.historium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100955442928-7ussa9i0katmhgkhf6erqqo6evt852hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwEiw4XqnNhyOlIlvBzNmEjyJRYwqlRIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100955442928-7ussa9i0katmhgkhf6erqqo6evt852hj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

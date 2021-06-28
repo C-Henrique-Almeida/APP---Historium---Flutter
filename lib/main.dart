@@ -17,6 +17,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     theme: appTheme,
     routes: {
       '/': (context) => InitialPage(),

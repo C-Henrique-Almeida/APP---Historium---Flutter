@@ -43,31 +43,31 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: _onItemTapped,
-        color: Colors.white,
-        backgroundColor: Colors.white,
-        buttonBackgroundColor: Colors.white,
+        color: Colors.black12,
+        backgroundColor: Colors.black12,
+        buttonBackgroundColor: Colors.black12,
         height: 45,
         items: <Widget>[
           Icon(
             Icons.home, 
             size: 25, 
-            color: _selectedIndex == 0 ? Colors.black : Colors.grey),
+            color: _selectedIndex == 0 ? Colors.white : Colors.grey),
           Icon(
             Icons.local_library_rounded, 
             size: 25, 
-            color: _selectedIndex == 1 ? Colors.black : Colors.grey),
+            color: _selectedIndex == 1 ? Colors.white : Colors.grey),
           Icon(
             Icons.create_rounded, 
             size: 25, 
-            color: _selectedIndex == 2 ? Colors.black : Colors.grey),
+            color: _selectedIndex == 2 ? Colors.white : Colors.grey),
           Icon(
             Icons.search, 
             size: 25, 
-            color: _selectedIndex == 3 ? Colors.black : Colors.grey),
+            color: _selectedIndex == 3 ? Colors.white : Colors.grey),
           Icon(
             Icons.notifications_rounded, 
             size: 25, 
-            color: _selectedIndex == 4 ? Colors.black : Colors.grey)
+            color: _selectedIndex == 4 ? Colors.white : Colors.grey)
         ],
         animationDuration: Duration(milliseconds: 200),
         animationCurve: Curves.linear  

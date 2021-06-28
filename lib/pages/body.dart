@@ -15,7 +15,7 @@ class _BodyPageState extends State<Body> {
             title: Text("Historium", style: GoogleFonts.revalia()),
             actions: [
               Icon(Icons.chat_bubble),
-              IconButton( HomePage
+              IconButton(
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -24,11 +24,6 @@ class _BodyPageState extends State<Body> {
                 ),
                 icon: Icon(Icons.account_circle)
               )
-
-                onPressed: () => Navigator.pushNamed(context, '/home/edit-profile'),
-                icon: Icon(Icons.account_circle)
-              ),
-master
             ],
             backgroundColor: Colors.black),
         body: ListView.builder(

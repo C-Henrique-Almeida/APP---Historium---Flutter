@@ -4,10 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:firebase_storage/firebase_storage.dart' as fbs;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-HomePage
 import 'package:historium/controller/outputModels/UserOutput.dart';
-
- master
 import 'package:historium/model/entity/User.dart';
 import 'package:historium/model/helpers/BookGenreHelper.dart';
 import 'package:historium/model/services/UserService.dart';
@@ -305,7 +302,6 @@ class EditProfilePageController {
 
   _EditProfilePageState state;
 
-HomePage
   EditProfilePageController(this.state);
 
   Future<void> loadUserData() async {
@@ -322,7 +318,6 @@ HomePage
     state.usernameController.text = user.username ?? '';
     state.birthDate = user.birthDate;
     state.favouriteGenres = user.favouriteGenres;
-HomePage
   }
 
   void pickDate() async {
@@ -330,7 +325,6 @@ HomePage
       context: context,
       initialDate: state.birthDate ?? DateTime.now(),
       firstDate: DateTime(1900),
- HomePage
       lastDate: state.birthDate
 
     );
@@ -362,7 +356,6 @@ HomePage
 
   Future<void> save() async {
     if(!state.formKey.currentState.validate()) return;
- HomePage
 
 
     User user = User(_auth.currentUser.uid);
@@ -390,7 +383,6 @@ HomePage
     user.favouriteGenres = state.favouriteGenres;
 
     await _userService.saveUser(user);
- HomePage
 
     
     Navigator.pop(context);

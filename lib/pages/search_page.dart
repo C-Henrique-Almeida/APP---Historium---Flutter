@@ -1,4 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
+import 'package:historium/controller/widgetControllers/search_page_controller_dart.dart';
 import 'package:historium/model/stories.dart';
 import 'package:historium/model/storiesData.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final controller = SearchPageController();
+
   List<Story> stories;
   String query = '';
 
@@ -36,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   final story = stories[index];
 
-                  return buildStory(story);
+                  return buildStory(context ,story);
                 },
               ),
             ),
@@ -50,16 +53,19 @@ class _SearchPageState extends State<SearchPage> {
         onChanged: searchStory,
       );
 
-  Widget buildStory(Story story) => ListTile(
-        leading: Image.network(
-          story.coverUrl,
-          fit: BoxFit.cover,
-          width: 50,
-          height: 50,
-        ),
-        title: Text(story.title),
-        subtitle: Text(story.author),
-      );
+  Widget buildStory(BuildContext context, Story story) => GestureDetector(
+    onTap: () => controller.callBookDetailsPage(context, ''),
+    child: ListTile(
+      leading: Image.network(
+        story.coverUrl,
+        fit: BoxFit.cover,
+        width: 50,
+        height: 50,
+      ),
+      title: Text(story.title),
+      subtitle: Text(story.author),
+    ),
+  );
 
   void searchStory(String query) {
     final stories = allStories.where((story) {

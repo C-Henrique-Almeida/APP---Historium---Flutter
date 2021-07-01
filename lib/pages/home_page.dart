@@ -2,7 +2,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'body.dart';
 import 'components/edit_book.dart';
-import 'create_page.dart';
 import 'library_page.dart';
 import 'new_book.dart';
 import 'notificacions_page.dart';
@@ -50,32 +49,48 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: _onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        onTap: _onItemTapped,
-        color: Colors.black12,
-        backgroundColor: Colors.black12,
-        buttonBackgroundColor: Colors.black12,
-        height: 45,
-        items: <Widget>[
-          Icon(
-            Icons.home, 
-            size: 25, 
-            color: _selectedIndex == 0 ? Colors.white : Colors.grey),
-          Icon(
-            Icons.local_library_rounded, 
-            size: 25, 
-            color: _selectedIndex == 1 ? Colors.white : Colors.grey),
-          Icon(
-            Icons.search, 
-            size: 25, 
-            color: _selectedIndex == 2 ? Colors.white : Colors.grey),
-          Icon(
-            Icons.notifications_rounded, 
-            size: 25, 
-            color: _selectedIndex == 3 ? Colors.white : Colors.grey)
-        ],
-        animationDuration: Duration(milliseconds: 200),
-        animationCurve: Curves.linear  
+      bottomNavigationBar: Container(
+        height: 55,
+        child: BottomNavigationBar(
+          onTap: _onItemTapped,
+          backgroundColor: Colors.black12,
+          elevation: 0,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home, 
+                size: 25,
+                color: _selectedIndex == 0 ? Colors.white : Colors.grey,
+                ),
+                label: '',
+              ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.local_library_rounded, 
+                size: 25,
+                color: _selectedIndex == 1 ? Colors.white : Colors.grey,
+                ),
+                label: ''
+              ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search, 
+                size: 25,
+                color: _selectedIndex == 2 ? Colors.white : Colors.grey,
+                ),
+                label: ''
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.notifications_rounded, 
+                size: 25,
+                color: _selectedIndex == 3 ? Colors.white : Colors.grey,
+                ),
+                label: ''
+            ),
+          ],
+          currentIndex: _selectedIndex,
+        ),
       ),
     );
   }

@@ -34,6 +34,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
+		print('Hello World');
 
     controller = EditProfilePageController(this);
   }
@@ -89,14 +90,14 @@ class EditProfilePageState extends State<EditProfilePage> {
       key: formKey,
       child: LayoutBuilder(
         builder: (BuildContext _context, BoxConstraints constraints) =>
-        SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(_context).size.height -
-                    Scaffold.of(_context).appBarMaxHeight,
-            padding: EdgeInsets.symmetric(
-              vertical: 50,
-              horizontal: 10
-            ),
+				Container(
+					height: MediaQuery.of(_context).size.height -
+									Scaffold.of(_context).appBarMaxHeight,
+					padding: EdgeInsets.symmetric(
+						vertical: 50,
+						horizontal: 10
+					),
+					child: SingleChildScrollView(
             child: Column(
               children: [
                 _buildProfilePictureContainer(context),
@@ -107,9 +108,10 @@ class EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(height: 30),
                 _buildFavouriteGenresField(context),
               ],
-            ),
-          ),
-        ),
+						),
+        	),
+				)
+        ,
       ),
     );
   }
@@ -278,10 +280,7 @@ class EditProfilePageState extends State<EditProfilePage> {
         ),
       )
     );
-
-    setState(() {
-      favouriteGenreFieldController.text =
-        favouriteGenres.join(', ');
-    });
+    
+		favouriteGenreFieldController.text = favouriteGenres.join(', ');
   }
 }

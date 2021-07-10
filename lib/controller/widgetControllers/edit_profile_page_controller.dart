@@ -51,7 +51,6 @@ class EditProfilePageController {
       state.birthDate = dateTime;
 
       state.birthDateFieldController.text = _toFormatedDate(dateTime);
-      state.update();
     }
   }
 

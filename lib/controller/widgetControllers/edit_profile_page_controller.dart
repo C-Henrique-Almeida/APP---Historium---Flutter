@@ -26,7 +26,6 @@ class EditProfilePageController {
 
     final user = UserOutput.fromUser(await _userService.loadUser(uid));
 
-
     state.birthDateFieldController.text = _toFormatedDate(user.birthDate);
     state.favouriteGenreFieldController.text = user.favouriteGenres.join(', ');
 
@@ -34,7 +33,7 @@ class EditProfilePageController {
     state.profilePictureUri = '';
     state.usernameController.text = user.username ?? '';
     state.birthDate = user.birthDate;
-    state.favouriteGenres = user.favouriteGenres;
+		state.genreController.genres = user.favouriteGenres;
   }
 
   void pickDate() async {
@@ -42,7 +41,7 @@ class EditProfilePageController {
       context: context,
       initialDate: state.birthDate ?? DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: state.birthDate
+      lastDate: DateTime.now()
 
     );
 
@@ -76,6 +75,8 @@ class EditProfilePageController {
 
     User user = User(_auth.currentUser.uid);
 
+		print(user);
+
     if(
         state.profilePictureUri != null
       && state.profilePictureUri.isNotEmpty
@@ -96,7 +97,7 @@ class EditProfilePageController {
 
     user.username = state.usernameController.text;
     user.birthDate = state.birthDate;
-    user.favouriteGenres = state.favouriteGenres;
+    user.favouriteGenres = state.genreController.value;
 
     await _userService.saveUser(user);
 

@@ -55,7 +55,12 @@ class _NewBookState extends State<NewBook> {
             children: <Widget>[
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: "Titulo da História", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                decoration: InputDecoration(
+									hintText: 'Título do livro',
+									border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(50))
+									)
+								),
                 onChanged: (text){
                   _editando = true;
                 },
@@ -63,7 +68,12 @@ class _NewBookState extends State<NewBook> {
               Divider(),
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: "Descrição da História", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                decoration: InputDecoration(
+									hintText: 'Descrição da história',
+									border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(50))
+									)
+								),
                 onChanged: (text){
                   _editando = true;
                 },
@@ -71,7 +81,12 @@ class _NewBookState extends State<NewBook> {
               Divider(),
               TextField(
                 controller: copyrightController,
-                decoration: InputDecoration(labelText: "Direitos autorais", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                decoration: InputDecoration(
+									hintText: 'Direitos autorais',
+									border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(50))
+									)
+								),
                 onChanged: (text){
                   _editando = true;
                 //  direitos autorais = text;
@@ -80,7 +95,12 @@ class _NewBookState extends State<NewBook> {
               Divider(),
               TextField(
                 controller: languageController,
-                decoration: InputDecoration(labelText: "Idioma", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                decoration: InputDecoration(
+									hintText: 'Idioma',
+									border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(50))
+									)
+								),
                 onChanged: (text){
                   _editando = true;
                 },
@@ -89,7 +109,12 @@ class _NewBookState extends State<NewBook> {
               TextField(
                 keyboardType: TextInputType.number,
                 controller: numberOfPagesController,
-                decoration: InputDecoration(labelText: "Quantidade de Páginas", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                decoration: InputDecoration(
+									hintText: 'Quantidade de páginas',
+									border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(50))
+									)
+								),
                 onChanged: (text){
                   _editando = true;
                 },

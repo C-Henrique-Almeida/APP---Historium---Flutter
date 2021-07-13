@@ -29,7 +29,6 @@ class EditProfilePageState extends State<EditProfilePage> {
   String initialProfilePictureUrl = '';
   String profilePictureUri = '';
   DateTime birthDate = DateTime.now();
-  List<String> favouriteGenres = [];
 
   @override
   void initState() {
@@ -71,7 +70,10 @@ class EditProfilePageState extends State<EditProfilePage> {
             case ConnectionState.none:
             case ConnectionState.waiting:
             case ConnectionState.active:
-              body = Expanded(child: Text('Carregando...'),);
+              body = Container(
+								child: Text('Carregando'),
+								alignment: Alignment.center,
+							);
               break;
             case ConnectionState.done:
               body = displayPage();
@@ -107,6 +109,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(height: 30),
                	GenrePickerField(
 									controller: genreController,
+									hintText: 'Gêneros favoritos',
 								)
               ],
 						),
@@ -121,7 +124,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     return GestureDetector(
       onTap: () async {
         final selectedImagePath = (await ImagePicker()
-          .getImage(source: ImageSource.gallery))?.path
+          .getImage(source: ImageSource.gallery)).path
           ?? '';
 
         if(selectedImagePath.isNotEmpty) {

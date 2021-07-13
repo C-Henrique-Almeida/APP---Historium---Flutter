@@ -3,8 +3,12 @@ import 'package:historium/model/helpers/BookGenreHelper.dart';
 
 class GenrePickerField extends StatefulWidget {
 	final GenrePickerFieldController controller;
+	final hintText;
 
-	GenrePickerField({this.controller});
+	GenrePickerField({
+		this.controller,
+		this.hintText
+	});
 
 	@override
 	_GenrePickerFieldState createState() => _GenrePickerFieldState();
@@ -38,9 +42,10 @@ class _GenrePickerFieldState extends State<GenrePickerField> {
 				builder: (BuildContext _context) => buildGenrePickerPanel()
 			),
       decoration: InputDecoration(
-				border: OutlineInputBorder(),
-        labelText: "Seu estilo",
-				labelStyle: TextStyle(color: Colors.white),
+        hintText: widget.hintText ?? 'Gêneros',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50))
+        )
       ),
       controller: textController,
       validator: (String value) {
@@ -125,8 +130,8 @@ class _GenrePickerFieldState extends State<GenrePickerField> {
 }
 
 class GenrePickerFieldController extends ValueNotifier<List<String>> {
-	GenrePickerFieldController({List<String> initialGenres = const []})
-	: super(initialGenres);
+	GenrePickerFieldController({List<String> initialGenres})
+	: super(initialGenres ?? []);
 
 	get allGenres => BookGenreHelper().listAll();
 

@@ -29,7 +29,7 @@ class RegisterService {
   }
 
   Future<void> registerUser(UserInput userInput) async {
-    final user = User(userInput.uid);
+    final user = User();
 
     final pictureReference = _storage.ref('profilePictures')
     .child(userInput.uid);
@@ -38,6 +38,7 @@ class RegisterService {
     .putFile(File(userInput.profilePictureUri))
     .whenComplete(() => null);
 
+		user.id = userInput.uid;
     user.profilePictureUrl = await pictureReference.getDownloadURL();
     user.username = userInput.username;
     user.birthDate = userInput.birthDate;

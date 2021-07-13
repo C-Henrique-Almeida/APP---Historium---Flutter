@@ -1,28 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:historium/model/entity/User.dart';
-import 'package:historium/model/helpers/helper.dart';
 
-class UserHelper extends Helper<User> {
-  @override
-  Map<String, dynamic> entityToMap(User entity) {
-    return {
-      'uid': entity.id,
-      'profilePictureUrl': entity.profilePictureUrl,
-      'username': entity.username,
-      'birthDate': entity.birthDate.millisecondsSinceEpoch,
-      'favouriteGenres': entity.favouriteGenres,
-    };
+class UserHelper {
+	final _firestore = FirebaseFirestore.instance;
+
+	static const collectionName = 'User';
+
+  Future <void> save(User user) async {
+    await _firestore
+    .collection(collectionName)
+    .doc(user.id)
+    .set(user.toMap());
   }
 
-  @override
-  User entityFromMap(Map<String, dynamic> map) {
-    final user = User(map['uid']);
+  Future<User> load(String id) async {
+		final userMap = (
+			await _firestore
+			.collection(collectionName)
+			.doc(id)
+			.get()
+		).data();
 
-    user.profilePictureUrl = map['profilePictureUrl'];
-    user.username = map['username'];
-    user.birthDate = DateTime.fromMillisecondsSinceEpoch(map['birthDate']);
+    return User.fromMap(userMap);
+  }
 
-    user.favouriteGenres = List<String>.from(map['favouriteGenres']);
-
-    return user;
+  Future<void> delete(String id) async {
+    await _firestore
+    .collection(collectionName)
+    .doc(id)
+    .delete();
   }
 }

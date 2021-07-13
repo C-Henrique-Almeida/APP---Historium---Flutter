@@ -1,85 +1,95 @@
-import 'package:google_fonts/google_fonts.dart';
-import 'package:historium/controller/widgetControllers/search_page_controller_dart.dart';
-import 'package:historium/model/stories.dart';
-import 'package:historium/model/storiesData.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:historium/pages/widgets/searchWidget.dart';
+import 'package:get/get.dart';
+import 'package:historium/model/services/BookDataService.dart';
+
 
 class SearchPage extends StatefulWidget {
-
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final controller = SearchPageController();
-
-  List<Story> stories;
-  String query = '';
-
+  final TextEditingController searchController = TextEditingController();
+  QuerySnapshot snapshotData;
+  bool isExecuted = false;
+  
   @override
-  void initState() {
-    super.initState();
-
-    stories = allStories;
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text("Historium", style: GoogleFonts.revalia()),
-          backgroundColor: Colors.black
-        ),
-        body: Column(
-          children: <Widget>[
-            buildSearch(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: stories.length,
-                itemBuilder: (context, index) {
-                  final story = stories[index];
-
-                  return buildStory(context ,story);
+  Widget build(BuildContext context) {
+    Widget searchedData() {
+      return ListView.builder(
+          itemCount: snapshotData.docs.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+                onTap: () {
+                  //Get.to();
                 },
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                    NetworkImage(snapshotData.docs[index]['coverUrl']),
+                ),
+                title: Text(
+                  snapshotData.docs[index]['title'],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22.0),
+                ),
+                subtitle: Text(
+                  snapshotData.docs[index]['author'],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0),
+                ),
+            ),
+          );
+        },
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          GetBuilder<BookDataService>(
+              init: BookDataService(),
+              builder: (val) {
+                return IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      val.queryData(searchController.text).then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                  );
+              })
+        ],
+        title: TextField(
+          style: TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            hintText: 'Título ou Autor',
+            hintStyle: TextStyle(color: Colors.white),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              ),
+            contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12)
+          ),
+          controller: searchController,
+        ),
+        backgroundColor: Colors.black,
+      ),
+      body: isExecuted
+          ? searchedData()
+          : Container(
+              child: Center(
+                child: Text('',
+                    style: TextStyle(color: Colors.white, fontSize: 30.0)),
               ),
             ),
-          ],
-        ),
-      );
-
-  Widget buildSearch() => SearchWidget(
-        text: query,
-        hintText: 'Título ou Autor',
-        onChanged: searchStory,
-      );
-
-  Widget buildStory(BuildContext context, Story story) => GestureDetector(
-    onTap: () => controller.callBookDetailsPage(context, ''),
-    child: ListTile(
-      leading: Image.network(
-        story.coverUrl,
-        fit: BoxFit.cover,
-        width: 50,
-        height: 50,
-      ),
-      title: Text(story.title),
-      subtitle: Text(story.author),
-    ),
-  );
-
-  void searchStory(String query) {
-    final stories = allStories.where((story) {
-    final titleLower = story.title.toLowerCase();
-    final authorLower = story.author.toLowerCase();
-    final searchLower = query.toLowerCase();
-
-    return titleLower.contains(searchLower) ||
-        authorLower.contains(searchLower);
-    }).toList();
-
-    setState(() {
-      this.query = query;
-      this.stories = stories;
-    });
+    );
   }
 }

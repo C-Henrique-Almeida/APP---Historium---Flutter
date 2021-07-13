@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'components/fields/GenrePickerField.dart';
 import 'edit_book.dart';
+import 'dart:io';
 
 class NewBook extends StatefulWidget {
     @override
@@ -20,6 +22,7 @@ class _NewBookState extends State<NewBook> {
           'copyright': copyrightController.text,
           'genre': genresController.value,
           'pages': numberOfPagesController.text,
+          'cover': profilePictureUri,
         }
     );
      Navigator.pop(context);
@@ -29,6 +32,9 @@ class _NewBookState extends State<NewBook> {
   }
 
   bool _editando = false;
+
+   String profilePictureUri = '';
+   String initialProfilePictureUrl = 'https://cdn.icon-icons.com/icons2/1856/PNG/512/create-new-folder_117137.png';
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -53,6 +59,36 @@ class _NewBookState extends State<NewBook> {
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
+              GestureDetector(
+              onTap: () async {
+                final selectedImagePath = (await ImagePicker()
+                    .getImage(source: ImageSource.gallery)).path
+                ?? '';
+
+                if(selectedImagePath.isNotEmpty) {
+                setState(() {
+                profilePictureUri = selectedImagePath;
+                });
+                }
+                },
+                  child: Container(
+                    constraints: BoxConstraints(
+                        maxHeight: 250,
+
+                    ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fitHeight,
+                          image:
+                          profilePictureUri != null &&
+                              profilePictureUri.isNotEmpty ?
+                          FileImage(File(profilePictureUri)) :
+                          NetworkImage(initialProfilePictureUrl)
+                      ),
+                    ),
+                  ),
+                ),
+              Divider(),
               TextField(
                 controller: titleController,
                 decoration: InputDecoration(

@@ -10,6 +10,7 @@ class NewBook extends StatefulWidget {
 
 class _NewBookState extends State<NewBook> {
 
+
    void addToFirebase() {
      var collection = FirebaseFirestore.instance.collection('books');
      collection.add(
@@ -124,10 +125,12 @@ class _NewBookState extends State<NewBook> {
               Divider(),
               Column(
                 children: <Widget>[
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Criar livro'),
                     onPressed: addToFirebase,
-                    color: Colors.black87,
+                    style: ButtonStyle(
+											backgroundColor: MaterialStateProperty.all(Colors.black87),
+										),
                   )
                 ]
               )

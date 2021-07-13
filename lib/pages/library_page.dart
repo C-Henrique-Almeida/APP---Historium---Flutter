@@ -36,13 +36,12 @@ class LibraryPageState extends State<LibraryPage> {
 
           switch(snapshot.connectionState) {
             case ConnectionState.none:
-              widget = Text('Carregando.');
-              break;
             case ConnectionState.waiting:
-              widget = Text('Carregando..');
-              break;
             case ConnectionState.active:
-              widget = Text('Carregando...');
+              widget = Container(
+								alignment: Alignment.center,
+								child: Text('Carregando...'),
+							);
               break;
             case ConnectionState.done:
               widget = _buildCards(context, snapshot);

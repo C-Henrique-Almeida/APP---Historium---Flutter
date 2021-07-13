@@ -53,21 +53,10 @@ class _BookDetailsScreenState extends State<BookDetailsPage> {
 	}
 
 	Widget _buildLoadingScreen(BuildContext context) {
-		final bodyHeight = 
-			MediaQuery.of(context).size.height - Scaffold.of(context).appBarMaxHeight;
-		
-		final bodyWidth = 
-			MediaQuery.of(context).size.width;
-
 		return Container(
-			height: bodyHeight,
-			width: bodyWidth,
 			alignment: Alignment.center,
 			child: Text(
 				'Carregando...',
-				style: TextStyle(
-					fontSize: 50
-				),
 			),
 		);
 	}

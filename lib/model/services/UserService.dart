@@ -8,8 +8,8 @@ class UserService {
     await _userHelper.save(user);
   }
 
-  Future<User> loadUser(String id) async {
-    return await _userHelper.load(id);
+  Future<User> loadUser(String id, {eagerLoad = false}) async {
+    return await _userHelper.load(id, eagerLoading: eagerLoad);
   }
 
   Future<void> deleteUser(String id) async {

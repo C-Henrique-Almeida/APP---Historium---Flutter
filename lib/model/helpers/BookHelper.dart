@@ -4,7 +4,7 @@ import 'package:historium/model/entity/Book.dart';
 class BookHelper {
 	final _firestore = FirebaseFirestore.instance;
 
-	static const collectionName = 'test_books';
+	static const collectionName = 'books';
 
 	Future<void> save(Book book) async {
 		if(book.id == null) {
@@ -21,7 +21,8 @@ class BookHelper {
 	}
 
 	Future<Book> load(String id) async {
-		final bookMap = (await _firestore.doc(id).get()).data();
+		final bookMap =
+			(await _firestore.collection(collectionName).doc(id).get()).data();
 
 		final book = Book.fromMap(bookMap);
 		book.id = id;

@@ -1,24 +1,18 @@
 import 'package:historium/controller/outputModels/StoryDetailsOutput.dart';
+import 'package:historium/model/services/BookService.dart';
 
 class BookDetailsPageController {
 	Future<StoryDetailsOutput> loadStoryInfo(String id) async {
+		final bookService = BookService();
 		final storyOutput = StoryDetailsOutput();
+		final book = await bookService.loadBook(id);
 
-		storyOutput.title = 'A revolução dos bixos';
-		storyOutput.authorName = 'George Orwell';
-		storyOutput.coverUrl = 'https://images-na.ssl-images-amazon.com/images/I/81D0qNDMqPL.jpg';
-		storyOutput.genres = [
-      "Romance",
-      "Ação",
-      "Scifi",
-      "Bibliografia",
-      "Horror",
-      "Fantasia",
-      "Suspence",
-      "Classico",
-    ];
-		storyOutput.summary = 'Uns animal vai lá e faz oque a população brasileira não fez em uns 500 anos de história';
+		storyOutput.title = book.title;
+		storyOutput.authorName = book.author;
+		storyOutput.coverUrl = book.cover;
+		storyOutput.genres = book.genres;
+		storyOutput.summary = book.description;
 
-		return Future.value(storyOutput);
+		return storyOutput;
 	}
 }

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:historium/controller/widgetControllers/book_details_page_controller.dart';
 import 'package:historium/model/services/BookDataService.dart';
+import 'package:historium/pages/book_details_page.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -22,12 +24,17 @@ class _SearchPageState extends State<SearchPage> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
                 onTap: () {
-                  //Get.to();
+									Navigator.push(
+										context,
+										MaterialPageRoute(
+											builder: (_context) => BookDetailsPage(snapshotData.docs[index].id,)
+										)
+									);
                 },
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundImage:
-                    NetworkImage(snapshotData.docs[index]['coverUrl']),
+                    NetworkImage(snapshotData.docs[index]['cover']),
                 ),
                 title: Text(
                   snapshotData.docs[index]['title'],

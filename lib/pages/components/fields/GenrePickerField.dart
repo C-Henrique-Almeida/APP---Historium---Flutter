@@ -38,7 +38,9 @@ class _GenrePickerFieldState extends State<GenrePickerField> {
 				builder: (BuildContext _context) => buildGenrePickerPanel()
 			),
       decoration: InputDecoration(
-        hintText: "Seu estilo",
+				border: OutlineInputBorder(),
+        labelText: "Seu estilo",
+				labelStyle: TextStyle(color: Colors.white),
       ),
       controller: textController,
       validator: (String value) {

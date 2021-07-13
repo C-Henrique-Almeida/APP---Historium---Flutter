@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'components/fields/GenrePickerField.dart';
+import 'edit_book.dart';
 
 class NewBook extends StatefulWidget {
     @override
@@ -7,7 +10,35 @@ class NewBook extends StatefulWidget {
 
 class _NewBookState extends State<NewBook> {
 
+   void addToFirebase() {
+     var collection = FirebaseFirestore.instance.collection('books');
+     collection.add(
+        {
+          'title': titleController.text,
+          'description': descriptionController.text,
+          'language': languageController.text,
+          'copyright': copyrightController.text,
+          'genre': genresController.value,
+          'pages': numberOfPagesController.text,
+        }
+    );
+     Navigator.pop(context);
+     Navigator.push(context,
+         MaterialPageRoute(builder: (context) => EditBook())
+     );
+  }
+
   bool _editando = false;
+
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final genresController = GenrePickerFieldController(initialGenres: []);
+  final copyrightController = TextEditingController();
+  final languageController = TextEditingController();
+  final numberOfPagesController = TextEditingController();
+  //final firebaseAuth = fba.FirebaseAuth.instance;
+
+  List<String> favouriteGenres = [];
 
   @override
   Widget build(BuildContext context) {
@@ -22,52 +53,55 @@ class _NewBookState extends State<NewBook> {
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              IconButton(
-                onPressed: (){},
-                icon: Icon(Icons.folder_outlined),
-                iconSize: 140.0,
-                splashColor: Colors.white,
-              ),
               TextField(
+                controller: titleController,
                 decoration: InputDecoration(labelText: "Titulo da História", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
                 onChanged: (text){
                   _editando = true;
-                 // titulo da historia = text;
                 },
               ),
+              Divider(),
               TextField(
+                controller: descriptionController,
                 decoration: InputDecoration(labelText: "Descrição da História", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
                 onChanged: (text){
                   _editando = true;
-                // descrição da historia = text;
                 },
               ),
+              Divider(),
               TextField(
-                decoration: InputDecoration(labelText: "Gênero da História", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
-                onChanged: (text){
-                  _editando = true;
-                //  genero da historia = text;
-                },
-              ),
-              TextField(
+                controller: copyrightController,
                 decoration: InputDecoration(labelText: "Direitos autorais", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
                 onChanged: (text){
                   _editando = true;
                 //  direitos autorais = text;
                 },
               ),
+              Divider(),
               TextField(
+                controller: languageController,
                 decoration: InputDecoration(labelText: "Idioma", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
                 onChanged: (text){
                   _editando = true;
-                  //  idioma = text;
                 },
               ),
+              Divider(),
+              TextField(
+                keyboardType: TextInputType.number,
+                controller: numberOfPagesController,
+                decoration: InputDecoration(labelText: "Quantidade de Páginas", border: OutlineInputBorder(),labelStyle: TextStyle(color: Colors.white)),
+                onChanged: (text){
+                  _editando = true;
+                },
+              ),
+              Divider(),
+              GenrePickerField(controller:genresController),
+              Divider(),
               Column(
                 children: <Widget>[
                   RaisedButton(
-                    child: Text('Adicionar capitulo'),
-                    onPressed: (){},
+                    child: Text('Criar livro'),
+                    onPressed: addToFirebase,
                     color: Colors.black87,
                   )
                 ]

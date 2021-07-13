@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'body.dart';
-import 'components/edit_book.dart';
+import 'edit_book.dart';
 import 'create_page.dart';
 import 'library_page.dart';
 import 'new_book.dart';
